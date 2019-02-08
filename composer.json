@@ -1,0 +1,31 @@
+{
+  "name": "devtoolboxuk/sanitiser",
+  "description": "DataSanitiser Service",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "": "library/",
+      "devtoolboxuk\\sanitiser\\": "src/"
+    },
+    "classmap": [
+      "src"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Rob Wilson",
+      "email": "rob@dev-toolbox.co.uk"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.16"
+  },
+  "minimum-stability": "dev",
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  }
+}
