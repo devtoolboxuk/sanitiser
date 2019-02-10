@@ -7,16 +7,16 @@ use ReflectionClass;
 class Factory
 {
     protected $rulePrefixes = [
-        'devtoolboxuk\\sanitiser\\Classes\\',
+        'devtoolboxuk\\sanitiser\\classes\\',
     ];
 
-
-    public function sanitise($ruleName, $options = [])
+    public function build($ruleName, $options = [])
     {
 
         foreach ($this->getRulePrefixes() as $prefix) {
 
             $className = $prefix . ucfirst($ruleName);
+
             if (!class_exists($className)) {
                 continue;
             }
