@@ -3,7 +3,7 @@
 namespace devtoolboxuk\sanitiser;
 
 /**
- * @method static Sanitiser disinfect()
+ * @method static Sanitiser filter()
  */
 class Sanitise
 {

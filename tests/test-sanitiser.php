@@ -45,6 +45,16 @@ class DetectionTest extends TestCase
         parent::__construct($name, $data, $dataName);
     }
 
+    function testCheck()
+    {
+        $string = '<a href=\"\u0001java\u0003script:alert(1)\">CLICK<a>';
+        $string = '<IMG SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#';
+        $string = '\x3cscript src=http://www.example.com/malicious-code.js\x3e\x3c/script\x3e';
+
+        $disinfect = s::filter()->string($string)->filterSpecial();
+        print_r($disinfect->cleanse());
+
+    }
 
     function testArrayEmailFilter()
     {
@@ -57,7 +67,7 @@ class DetectionTest extends TestCase
         ];
 
         foreach ($equalsArray as $arr) {
-            $disinfect = s::disinfect()->string($arr[1])
+            $disinfect = s::filter()->string($arr[1])
             ->filterEmail();
             $this->assertEquals($arr[0], $disinfect->cleanse());
         }
@@ -99,7 +109,7 @@ class DetectionTest extends TestCase
         ];
 
         foreach ($equalsArray as $arr) {
-            $disinfect = s::disinfect()->string($arr[1])
+            $disinfect = s::filter()->string($arr[1])
                 ->filterString();
             $this->assertEquals($arr[0], $disinfect->cleanse());
         }
@@ -124,7 +134,7 @@ class DetectionTest extends TestCase
         ];
 
         foreach ($equalsArray as $arr) {
-            $disinfect = s::disinfect()->string($arr[1])
+            $disinfect = s::filter()->string($arr[1])
                 ->filterSpecial();
             $this->assertEquals($arr[0], $disinfect->cleanse());
         }
@@ -140,7 +150,7 @@ class DetectionTest extends TestCase
         ];
 
         foreach ($equalsArray as $arr) {
-            $disinfect = s::disinfect()->string($arr[1])
+            $disinfect = s::filter()->string($arr[1])
                 ->filterUrl();
             $this->assertEquals($arr[0], $disinfect->cleanse());
         }
@@ -149,13 +159,13 @@ class DetectionTest extends TestCase
 
     function testFilterInt()
     {
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string("test@test.local")
             ->filterInt();
 
         $this->assertEquals("", $disinfect->cleanse());
 
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string("2.2")
             ->filterInt();
 
@@ -164,7 +174,7 @@ class DetectionTest extends TestCase
 
     function testFilterUrl()
     {
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string($this->testUrl)
             ->filterUrl();
 
@@ -174,7 +184,7 @@ class DetectionTest extends TestCase
 
     function testFilterSpecial()
     {
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string($this->testUrl."?alert('Data')")
             ->filterSpecial();
 
@@ -183,19 +193,19 @@ class DetectionTest extends TestCase
 
     function testFilterFloat()
     {
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string("test@test.local")
             ->filterFloat();
 
         $this->assertEquals("", $disinfect->cleanse());
 
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string("2.2")
             ->filterFloat();
 
         $this->assertEquals("22", $disinfect->cleanse());
 
-        $disinfect = s::disinfect()
+        $disinfect = s::filter()
             ->string("2.2")
             ->filterFloatFraction();
 
@@ -205,18 +215,18 @@ class DetectionTest extends TestCase
 
     function testEmailFilter()
     {
-        $disinfect = s::disinfect()->string("test@test.local")
+        $disinfect = s::filter()->string("test@test.local")
             ->filterEmail();
 
         $this->assertEquals($this->testEmail, $disinfect->cleanse());
 
 
-        $disinfect = s::disinfect()->string($this->testEmail)
+        $disinfect = s::filter()->string($this->testEmail)
             ->filterEmail();
 
         $this->assertNotEquals($this->testString, $disinfect->cleanse());
 
-        $disinfect = s::disinfect()->string($this->testString)
+        $disinfect = s::filter()->string($this->testString)
             ->filterEmail();
 
         $this->assertNotEquals($this->testString, $disinfect->cleanse());
@@ -258,7 +268,7 @@ class DetectionTest extends TestCase
         ];
 
         foreach ($equalsArray as $arr) {
-            $disinfect = s::disinfect()->string($arr[1]);
+            $disinfect = s::filter()->string($arr[1]);
             $this->assertEquals($arr[0], $disinfect->cleanse());
         }
     }
