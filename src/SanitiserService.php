@@ -41,7 +41,7 @@ class SanitiserService
      * @param bool $stringLength
      * @return mixed
      */
-    protected function disinfect($data, $type = 'special_chars', $stringLength = false)
+    public function disinfect($data, $type = 'special_chars', $stringLength = false)
     {
         $data = $this->cleanString($data);
         $data = $this->stringLength($data, $stringLength);
