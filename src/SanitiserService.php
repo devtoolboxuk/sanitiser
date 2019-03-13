@@ -12,7 +12,9 @@ class SanitiserService
     {
         $data = $this->cleanString($data);
         $data = mb_convert_encoding($data, "utf-8", "auto");
-        return htmlspecialchars_decode($data);
+        $data = htmlspecialchars_decode($data);
+        $data = $this->cleanString($data);
+        return $data;
     }
 
     /**
